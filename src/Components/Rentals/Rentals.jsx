@@ -1,6 +1,25 @@
 import "./Rentals.css";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
+import { AddHouse } from "../AddHouse/AddHouse";
 
 export const Rentals = () => {
+  const [getFormData, setgFormData] = useState([])
+
+  function getData() {
+    axios.get("http://localhost:8080/houses").then((res) => {
+      setgFormData(res.data)
+
+    })
+  }
+  <AddHouse getData={getData} />
+
+  console.log("g", getFormData)
+
+  useEffect(() => {
+    getData()
+  }, [])
   return (
     <div className="rentalContainer">
       <div className="sortingButtons">
@@ -29,7 +48,7 @@ export const Rentals = () => {
           </tr>
         </thead>
         <tbody>
-          {[].map((house, index) => {
+          {getFormData.map((house, index) => {
             return (
               <tr key={house.id} className="houseDetails">
                 <td className="houseId">{house.id}</td>

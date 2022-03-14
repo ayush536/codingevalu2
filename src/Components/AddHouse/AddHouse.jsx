@@ -1,6 +1,6 @@
 import{useState} from "react"
 import axios from "axios"
-export const AddHouse = () => {
+export const AddHouse = (props) => {
 
  const[formdata,setFormdata] =useState({
  name:"",
@@ -21,6 +21,7 @@ export const AddHouse = () => {
    e.preventDefault()
    axios.post("http://localhost:8080/houses",formdata).then(()=>{
      alert("Happy Renting")
+     props.getData()
      setFormdata({
       name:"",
       ownerName:"",
