@@ -1,70 +1,68 @@
-import{useState} from "react"
-import axios from "axios"
-export const AddHouse = () => {
+import  axios  from 'axios';
+import { useEffect, useState } from "react";
 
- const[formdata,setFormdata] =useState({
- name:"",
- ownerName:"",
- address:"",
- areaCode:"",
- rent:"",
- image:"",
- });
+export const AddHouse = (props) => {
+  const [formData, setFormdata] = useState({
+    name: "",
+    ownerName: "",
+    address: "",
+    areaCode: "",
+    rent: "",
+    bachelor: "",
+    married: "",
+    image: "",
+  });
 
- const handleChange=(e)=>{
-
-  const{className,value} =e.target;
-  setFormdata({...formdata ,[className]:value})
- }
-
- const handleSubmit =(e)=>{
-   e.preventDefault()
-   axios.post("http://localhost:8080/houses",formdata).then(()=>{
-     alert("user akm kr rha hai")
-     setFormdata({
-      name:"",
-      ownerName:"",
-      address:"",
-      areaCode:"",
-      rent:"",
-      image:"",
-
-     })
-
-   })
-
-   
- }
-
-
+  function handleChange(e) {
+    const { className, value } = e.target;
+    setFormdata({...formData, [className]: value })
+  }  
+  const getData = props.getData;
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios.post("http://localhost:8080/houses", formData).then(() => {
+      alert("House added");
+      getData()
+      setFormdata({
+        name: "",
+        ownerName: "",
+        address: "",
+        areaCode: "",
+        rent: "",
+        bachelor: "",
+        married: "",
+        image: "",
+      })
+    })
+  }  
   return (
     <div className="addHouseContainer">
       <form onSubmit={handleSubmit}>
         <label>name</label>
-        <input type="text" className="name" onChange={handleChange} value={formdata.name} required />
+        <input type="text" onChange = {handleChange} className="name" value={formData.name} required />
         <br />
         <label>ownerName</label>
-        <input value={formdata.ownerName} onChange={handleChange} type="text" className="ownerName" required />
+        <input value={formData.ownerName} type="text" onChange = {handleChange} className="ownerName" required />
         <br />
         <label>address</label>
-        <input value={formdata.address} onChange={handleChange} type="text" className="address" required />
+        <input value={formData.address} type="text" onChange = {handleChange} className="address" required />
         <br />
         <label>areaCode</label>
-        <input value={formdata.areaCode} onChange={handleChange} type="text" className="areaCode" required />
+        <input value={formData.areaCode} type="text" onChange = {handleChange} className="areaCode" required />
         <br />
         <label>rent</label>
-        <input value={formdata.rent} onChange={handleChange} type="text" className="rent" required />
+        <input value={formData.rent} type="text" onChange = {handleChange} className="rent" required />
         <br />
         <label>preferredTenant</label>
         <br />
         <label>bachelor</label>
-        <input checked={""} type="checkbox" className="bachelor" />
+        <input checked={formData.bachelor} type="checkbox" onChange = {handleChange} className="bachelor" />
         <br />
         <label>married</label>
-        <input checked={""} type="checkbox" className="married" />
+        <input checked={formData.married} type="checkbox" onChange = {handleChange} className="married" />
         <br />
         <label>image</label>
-        <input value={formdata.image} onChange={handleChange} type="text" className="image" required />
+        <input value={formData.image} type="text" onChange = {handleChange} className="image" required />
         <br />
         <input className="submitBtn" type="submit" />
       </form>
